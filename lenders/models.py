@@ -12,3 +12,6 @@ class Lender(models.Model):
     is_active = models.BooleanField(default=True)
     is_hidden = models.BooleanField(default=False)
     balance_multiplier = models.DecimalField(max_digits=10, decimal_places=4, default=Decimal('0.0'))
+
+    class Meta:
+        ordering = ['pk']
