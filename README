@@ -1,0 +1,70 @@
+#### Requirements
+
+If necessary install the following using the OS package manager:
+Python 3.10.x
+MariaDB 10.6.12
+
+Install the following packages:
+python3-pip
+python3-venv
+libmysqlclient-dev
+
+
+#### Installation and usage
+
+Log into a MariaDB shell as the root user and create a user and database for the app:
+```
+CREATE DATABASE finsure_dev CHARACTER SET UTF8;
+CREATE USER finsure_dev@localhost IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON finsure_dev.* TO finsure_dev@localhost;
+GRANT ALL PRIVILEGES ON test_finsure_dev.* TO finsure_dev@localhost;
+FLUSH PRIVILEGES;
+```
+
+Clone the repository and `cd` into it.
+At the root directory do:
+```
+python3 -m venv venv
+source venv/bin/activate
+pip -r requirements.txt
+```
+
+Run the migrations:
+```
+./manage.py migrate
+```
+
+Running the app:
+```
+./manage.py runserver
+```
+App can be accessed by visiting localhost:8000
+
+Running tests:
+```
+./manage.py test --keepdb
+```
+
+#### API endpoints
+
+`GET` `/lenders`
+`POST` `/lenders`
+`GET` `/lenders/<id>`
+`PUT` `/lenders/<id>`
+`PATCH` `/lenders/<id>`
+`DELETE` `/lenders/<id>`
+`POST` `/lenders/bulk_create`
+`GET` `/lenders/download_csv`
+
+See `lender_api.yaml` for more detail. Swagger UI available at `/api/schema/swagger-ui/` but `bulk_create` and `download_csv` sections need updating.
+
+#### Possible changes and improvements
+
+Add business logic around the model such as name and code uniqueness, logic for is_active and is_hidden.
+Add filtering and search to list and CSV download endpoints.
+Add authentication and authorisation
+Improve tests by testing response structure and non-happy-path scenarios.
+Add api versioning.
+Add error-handling to bulk create endpoint, it currently assumes a well-formed CSV with valid values.
+Depending on data size rework bulk create and CSV download. Large datasets may take too long to process and/or use too much memory.
+Improve documentation.
