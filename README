@@ -15,7 +15,7 @@ libmysqlclient-dev
 Log into a MariaDB shell as the root user and create a user and database for the app:
 ```
 CREATE DATABASE finsure_dev CHARACTER SET UTF8;
-CREATE USER finsure_dev@localhost IDENTIFIED BY 'password';
+CREATE USER finsure_dev@localhost IDENTIFIED BY '<password here>';
 GRANT ALL PRIVILEGES ON finsure_dev.* TO finsure_dev@localhost;
 GRANT ALL PRIVILEGES ON test_finsure_dev.* TO finsure_dev@localhost;
 FLUSH PRIVILEGES;
@@ -27,6 +27,14 @@ At the root directory do:
 python3 -m venv venv
 source venv/bin/activate
 pip -r requirements.txt
+```
+
+Add a `.env` file to the project root like so:
+```
+ALLOWED_HOSTS=localhost,127.0.0.1
+SECRET_KEY=<secret key here>
+DEBUG=True
+DB_PASSWORD=<db password here>
 ```
 
 Run the migrations:
